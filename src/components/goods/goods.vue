@@ -1,13 +1,9 @@
 <template>
-  <div class="header">
-    header > header
-  </div>
+  <div>this is goods</div>
 </template>
 
 <script type="text/ecmascript-6">
-  export default {
-    name: 'header'
-  };
+  export default {};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
