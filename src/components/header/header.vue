@@ -46,22 +46,14 @@
             <div class="star-wrapper">
               <star :size="48" :score="seller.score"></star>
             </div>
-            <div class="title">
-              <div class="line"></div>
-              <div class="text">优惠信息</div>
-              <div class="line"></div>
-            </div>
+            <header-title content="优惠信息"></header-title>
             <ul class="support" v-if="seller.supports">
               <li class="support-item" v-for="(item, index) in seller.supports">
                 <span class="icon" :class="classMap[item.type]"></span>
                 <span class="text">{{item.description}}</span>
               </li>
             </ul>
-            <div class="title">
-              <div class="line"></div>
-              <div class="text">商家公告</div>
-              <div class="line"></div>
-            </div>
+            <header-title content="商家公告"></header-title>
             <div class="bulletin">
               <p class="content">{{seller.bulletin}}</p>
             </div>
@@ -78,6 +70,7 @@
 
 <script type="text/ecmascript-6">
   import star from '../star/star.vue';
+  import title from '../title/title.vue';
 
   export default {
     name: 'header',
@@ -95,7 +88,8 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     components: {
-      star
+      star,
+      'header-title': title
     },
     methods: {
       showDetail () {
@@ -253,21 +247,6 @@
             margin-top: 18px
             padding: 2px 0
             text-align: center
-          .title
-            display: flex
-            margin: 28px auto 24px auto
-            width: 80%
-            .line
-              flex: 1
-              position: relative
-              top: -6px
-              border-bottom: 1px solid rgba(250, 250, 250, .2)
-            .text
-              flex: 1
-              padding: 0 12px
-              text-align: center
-              font-size: 14px
-              font-weight: 700
           .support
             margin: 0 auto
             width: 80%
