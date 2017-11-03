@@ -1,5 +1,5 @@
 <template>
-  <div class="title">
+  <div class="header-title">
     <div class="line"></div>
     <div class="text">{{content}}</div>
     <div class="line"></div>
@@ -17,7 +17,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .title
+  .header-title
     display: flex
     margin: 28px auto 24px auto
     width: 80%

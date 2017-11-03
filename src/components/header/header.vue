@@ -167,7 +167,7 @@
         position: absolute
         right: 12px
         bottom: 14px
-        padding: 8px
+        padding: 6px 8px
         height: 12px
         line-height: 12px
         text-align: center

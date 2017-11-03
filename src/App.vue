@@ -14,7 +14,7 @@
       </router-link>
     </div>
     <!--路由外链-->
-    <router-view class="view"></router-view>
+    <router-view class="view" :seller="seller"></router-view>
   </div>
 </template>
 
@@ -32,7 +32,7 @@
     created () {
       axios.get('/api/seller').then((response) => {
         if (response.data.errno === ERR_OK) {
-//          this.seller = Object.assign({}, response.data.data);
+//          this.seller = Object.assign({}, response.data.data); 需要额外添加属性时用这个方法
           this.seller = response.data.data;
         }
       });
