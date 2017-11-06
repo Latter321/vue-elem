@@ -20,18 +20,17 @@
         type: Object
       }
     },
-    created () {
-//      console.log(this.food);
-    },
     methods: {
       addCart (event) {
         if (!event._constructed) return; // 若不控制是bscroll派发的点击事件，那么会在pc端触发两次click事件
 //        console.log('222');// bscrool影响，会无法点击，在foodWrapper设置click为true
         if (!this.food.count) {
-          Vue.set(this.food, 'count', 1);// 当需要给原有对象增加或者删除属性时，需要用Vue的set方法，其后才会相应
+          Vue.set(this.food, 'count', 1);// 当需要给原有对象增加或者删除属性时，需要用Vue的set方法，其后才会响应
         } else {
           this.food.count++;
         }
+
+        this.$emit('cartAdd', event.target);
       },
       decreaseCart (event) {
         if (!event._constructed) return;

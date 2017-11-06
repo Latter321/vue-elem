@@ -36,7 +36,7 @@
                 </div>
                 <!--控制商品数量组件-->
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol :food="food" @cartAdd="_drop"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -46,6 +46,7 @@
     </div>
     <!--右侧列表 end-->
     <shopcart
+      ref="shopcart"
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice"
       :select-foods="selectFoods"></shopcart>
@@ -142,6 +143,9 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let el = foodList[index];
         this.foodScroll.scrollToElement(el, 300);
+      },
+      _drop (target) {
+        this.$refs.shopcart.drop(target);
       }
     }
   };
