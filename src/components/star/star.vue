@@ -54,14 +54,14 @@
     .star-item
       display: inline-block
       background-repeat: no-repeat
-      &.last-child
-        margin-right: 0
     &.star-48
       .star-item
         margin-right: 22px
         width: 20px
         height: 20px
         background-size: 20px
+        &:last-child
+          margin-right: 0
         &.on
           bg-image('./images/star48_on')
         &.half
@@ -70,10 +70,12 @@
           bg-image('./images/star48_off')
     &.star-36
       .star-item
-        margin-right: 16px
+        margin-right: 6px
         width: 15px
         height: 15px
         background-size: 15px
+        &:last-child
+          margin-right: 0
         &.on
           bg-image('./images/star36_on')
         &.half
@@ -86,6 +88,8 @@
         width: 10px
         height: 10px
         background-size: 10px
+        &:last-child
+          margin-right: 0
         &.on
           bg-image('./images/star24_on')
         &.half

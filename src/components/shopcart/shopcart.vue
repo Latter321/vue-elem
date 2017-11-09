@@ -296,7 +296,7 @@
           padding-right: 12px
           line-height: 24px
           box-sizing: border-box
-          border-right: rgba(255, 255, 255, .1)
+          border-right: 1px solid rgba(255, 255, 255, .1)
           font-size: 16px
           font-weight: 700
           &.highlight

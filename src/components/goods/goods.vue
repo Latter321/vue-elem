@@ -53,7 +53,7 @@
         :min-price="seller.minPrice"
         :select-foods="selectFoods"></shopcart>
     </div>
-    <!--food组件，用来传值-->
+    <!--food组件，详情页-->
     <food :food="selectedFood" ref="food"></food>
   </div>
 </template>

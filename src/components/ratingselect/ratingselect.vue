@@ -9,11 +9,11 @@
         <span class="block positive"
               @click="select(0,$event)"
               :class="{active:selectType===0}">{{desc.positive}}
-        <span class="count">47</span></span>
+        <span class="count">{{positives.length}}</span></span>
         <span class="block negative"
               @click="select(1,$event)"
               :class="{active:selectType===1}">{{desc.negative}}
-        <span class="count">47</span></span>
+        <span class="count">{{negatives.length}}</span></span>
       </div>
       <div class="switch"
            :class="{on:onlyContent}"
@@ -25,8 +25,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-//  const POSITIVE = 0;
-//  const NEGATIVE = 1;
+  const POSITIVE = 0;
+  const NEGATIVE = 1;
   const ALL = 2;
   export default {
     props: {
@@ -55,12 +55,23 @@
         }
       }
     },
+    computed: {
+      positives () {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === POSITIVE;
+        });
+      },
+      negatives () {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === NEGATIVE;
+        });
+      }
+    },
     methods: {
       select (type, e) {
         if (!e._constructed) {
           return;
         }
-        console.log(type);
         this.$emit('ratingType', type); // 把值传出去，父组件就会监听发生实时改变
       },
       toggleContent (e) {
