@@ -1,6 +1,6 @@
 <template>
     <div class="rating-select">
-      <div class="rating-type">
+      <div class="rating-type border-1px">
         <span class="block positive"
               @click="select(2,$event)"
               :class="{active:selectType===2}">
@@ -60,14 +60,13 @@
         if (!e._constructed) {
           return;
         }
-        this.selectType = type;
+        console.log(type);
         this.$emit('ratingType', type); // 把值传出去，父组件就会监听发生实时改变
       },
       toggleContent (e) {
         if (!e._constructed) {
           return;
         }
-        this.onlyContent = !this.onlyContent;
         this.$emit('toggleContent', this.onlyContent);
       }
     }

@@ -37,6 +37,8 @@
           <div class="rating">
             <h1 class="title">商品评价</h1>
             <ratingselect
+              @ratingType="ratingType"
+              @toggleContent = "toggleContent"
               :selectType.sync="selectType"
               :onlyContent.sync="onlyContent"
               :desc="desc" :ratings="food.ratings"></ratingselect>
@@ -139,6 +141,18 @@
         } else {
           return type === this.selectType;
         }
+      },
+      ratingType (type) { // 监听子组件评价类型选择
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      toggleContent () { // 监听子组件是否展示无内容评价
+        this.onlyContent = !this.onlyContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
       }
     },
     filters: {
