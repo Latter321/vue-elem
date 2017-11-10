@@ -28,6 +28,10 @@
             </div>
           </li>
         </ul>
+        <div class="favorite" @click="toggleFavorite($event)">
+          <span class="icon-favorite" :class="{active: favorite}"></span>
+          <span class="text">{{favoriteText}}</span>
+        </div>
       </div>
       <split></split>
       <div class="bulletin">
@@ -43,6 +47,27 @@
         </ul>
       </div>
       <split></split>
+      <!--商家实景 start-->
+      <div class="pics">
+        <h1 class="title">商家实景</h1>
+        <div class="pic-wrapper" ref="picWrapper">
+          <ul class="pic-list" ref="picList">
+            <li class="pic-item" v-for="pic in seller.pics">
+              <img :src="pic" alt="" width="120" height="90">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--商家实景 end-->
+      <split></split>
+      <!--商家信息 start-->
+      <div class="info">
+        <h1 class="title border-1px">商家信息</h1>
+        <ul>
+          <li class="info-item border-1px" v-for="item in seller.infos">{{item}}</li>
+        </ul>
+      </div>
+      <!--商家信息 end-->
     </div>
   </div>
 </template>
@@ -51,18 +76,47 @@
   import star from '../star/star.vue';
   import split from '../split/split.vue';
   import BScroll from 'better-scroll';
+  import {saveToLocal, loadFromLocal} from '../../common/js/storage';
   export default {
     props: {
       seller: {
         type: Object
       }
     },
+    data () {
+      return {
+        favorite: (() => {
+          return loadFromLocal(this.seller.id, 'favorite', false);
+        })()
+      };
+    },
+    computed: {
+      favoriteText () {
+        return this.favorite ? '已收藏' : '收藏';
+      }
+    },
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     mounted () {
-      console.log('333');
       this._initScroll();
+//      better-scroll滚动是在内层高度高于外层高度时触发
+      if (this.seller.pics) {
+        let picWidth = 120;
+        let margin = 6;
+        let width = (picWidth + margin) * this.seller.pics.length - margin; // 图片总宽度
+        this.$refs.picList.style.width = width + 'px';
+        this.$nextTick(() => {
+          if (!this.picScroll) {
+            this.picScroll = new BScroll(this.$refs.picWrapper, {
+              scrollX: true, // 横向滚动
+              eventPassthrough: 'vertical' // 图片在横向滚动时忽略竖向滚动
+            });
+          } else {
+            this.picScroll.refresh();
+          }
+        });
+      }
     },
     components: {
       star,
@@ -77,6 +131,13 @@
         } else {
           this.scroll.refresh();
         }
+      },
+      toggleFavorite (e) {
+        if (!e._constructed) {
+          return;
+        }
+        this.favorite = !this.favorite;
+        saveToLocal(this.seller.id, 'favorite', this.favorite);
       }
     }
   };
@@ -93,7 +154,24 @@
     overflow: hidden
     width: 100%
     .overview
+      position: relative
       padding: 18px
+      .favorite
+        position: absolute
+        right: 11px
+        top: 18px
+        width: 50px
+        text-align: center
+        .icon-favorite
+          display: block
+          color: #d4d6d9
+          font-size: 24px
+          &.active
+            color: rgb(240,20,20)
+        .text
+          line-height: 10px
+          font-size: 10px
+          color: rgb(7,17,27)
       .title
         margin-bottom: 8px
         line-height: 14px
@@ -176,4 +254,38 @@
           .text
             line-height: 12px
             font-size: 10px
+    .pics
+      padding: 18px
+      .title
+        margin-bottom: 12px
+        line-height: 14px
+        color: rgb(7,17,27)
+        font-size: 14px
+      .pic-wrapper // 固定横向滚动视口大小
+        width: 100%
+        overflow: hidden
+        white-space: nowrap // 超过屏幕宽度时不折行
+        .pic-list
+          font-size: 0
+          .pic-item
+            display: inline-block
+            margin-right: 6px
+            width: 120px
+            height: 90px
+            &:last-child
+              margin-right: 0
+    .info
+      padding: 18px 18px 0 18px
+      color: rgb(7,17,27)
+      .title
+        padding-bottom: 12px // 有分割线，不能用margin-bottom
+        line-height: 14px
+        border-1px(rgba(7,17,27,.1))
+        color: rgb(7,17,27)
+        font-size: 14px
+      .info-item
+        padding: 16px 12px
+        line-height:16px
+        border-1px(rgba(7,17,27,.1))
+        font-size: 12px
 </style>

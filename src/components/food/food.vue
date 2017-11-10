@@ -128,7 +128,6 @@
           return;
         }
         Vue.set(this.food, 'count', 1);
-        console.log(event.target);
         this.$emit('cartAdd', event.target);
       },
       needShow (type, text) {
